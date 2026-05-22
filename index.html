@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced UA Generator | By Arafat Rahman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #131314;
+            --surface-color: #1e1f20;
+            --surface-hover: #2a2b2f;
+            --text-primary: #e3e3e3;
+            --text-secondary: #c4c7c5;
+            --border-color: #444746;
+            --gemini-gradient: linear-gradient(90deg, #4b90ff, #ff5546);
+            --gemini-gradient-soft: linear-gradient(90deg, rgba(75, 144, 255, 0.1), rgba(255, 85, 70, 0.1));
+            --radius-large: 24px;
+            --radius-medium: 12px;
+            --radius-pill: 100px;
+        }
+
+        body { 
+            font-family: 'Google Sans', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { 
+            width: 90%;
+            max-width: 800px; 
+            background: var(--surface-color); 
+            padding: 2rem 2.5rem; 
+            border-radius: var(--radius-large); 
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gemini-gradient);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header h2 { 
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sparkle-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--gemini-gradient);
+            -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>') no-repeat center;
+            mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>') no-repeat center;
+        }
+
+        .developer-info {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: var(--bg-color);
+            padding: 6px 12px;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .developer-info a {
+            color: #a8c7fa;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .developer-info a:hover {
+            text-decoration: underline;
+        }
+
+        .controls { 
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            background: var(--bg-color);
+            padding: 12px;
+            border-radius: var(--radius-medium);
+            border: 1px solid var(--border-color);
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        input { 
+            font-family: 'Google Sans', sans-serif;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            width: 60px;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            border-color: #a8c7fa;
+            box-shadow: 0 0 0 1px #a8c7fa;
+        }
+
+        button { 
+            font-family: 'Google Sans', sans-serif;
+            padding: 8px 20px; 
+            cursor: pointer; 
+            border: none; 
+            border-radius: var(--radius-pill); 
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            outline: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        .btn-gen {
+            background: var(--text-primary);
+            color: var(--bg-color);
+        }
+
+        .btn-gen:hover {
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .btn-copy, .btn-down {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-copy:hover, .btn-down:hover {
+            background: var(--surface-hover);
+        }
+
+        .textarea-wrapper {
+            position: relative;
+            border-radius: var(--radius-medium);
+            background: var(--bg-color);
+            padding: 2px;
+            transition: all 0.3s;
+        }
+
+        .textarea-wrapper:focus-within {
+            background: var(--gemini-gradient);
+        }
+
+        textarea { 
+            width: 100%; 
+            height: 300px; 
+            background: var(--bg-color);
+            color: var(--text-secondary);
+            padding: 16px; 
+            border: none;
+            border-radius: calc(var(--radius-medium) - 2px); 
+            font-family: 'Roboto Mono', monospace; 
+            font-size: 12.5px; 
+            line-height: 1.5;
+            resize: none;
+            box-sizing: border-box;
+            white-space: pre;
+            outline: none;
+        }
+
+        textarea::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        textarea::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+            border: 2px solid var(--bg-color);
+        }
+
+        .footer-info {
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--gemini-gradient-soft);
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            color: #a8c7fa;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #a8c7fa;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(168, 199, 250, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(168, 199, 250, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(168, 199, 250, 0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2><div class="sparkle-icon"></div> UA Generator (Anti-Detect Pro)</h2>
+        <div class="developer-info">
+            Dev: <strong>Arafat Rahman</strong> • <a href="https://www.facebook.com/Arafat802" target="_blank">Facebook</a>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <label>Quantity:</label>
+        <input type="number" id="count" value="12">
+        <button class="btn-gen" onclick="generate()">Generate</button>
+        <button class="btn-copy" onclick="copy()">Copy</button>
+        <button class="btn-down" onclick="downloadTxt()">Download</button>
+    </div>
+
+    <div class="textarea-wrapper">
+        <textarea id="output" readonly placeholder="Output will appear here. Powered by strict uniqueness and smart ratio algorithms..."></textarea>
+    </div>
+    
+    <div class="footer-info">
+        <span class="status-badge" id="status">Ready</span>
+        <span id="timestamp"></span>
+    </div>
+</div>
+
+<script>
+    const osVersions = ["13", "14", "15"];
+    
+    // Separated models into Budget/Mid and Flagship to control ratios
+    const budgetMidModels = [
+        "SM-A042F", "SM-A135F", "SM-A145F", "SM-A235F", "SM-A245F", "SM-A346E", "SM-A546E", 
+        "SM-M135F", "SM-M146B", "SM-M336B", "SM-E236B", "SM-A736B",
+        "220733SPI", "22101316I", "23028RN4DG", "23053RN02I", "2310FPCA4I", 
+        "2201117TI", "22111317I", "23127PN0CG", "23078PND5G",
+        "V2204", "V2207", "V2111", "V2027", "V2029", "V2246", "V2250", "V2217",
+        "CPH2477", "CPH2387", "CPH2565", "CPH2363", "CPH2525", "CPH2493",
+        "RMX3581", "RMX3624", "RMX3710", "RMX3760", "RMX3686", "RMX3392", "RMX3771",
+        "Infinix X6831", "Infinix X6833B", "Infinix X669", "TECNO KI5k", "TECNO LH7n",
+        "SM-T295", "SM-X205", "Lenovo TB-X306X"
+    ];
+
+    const flagshipModels = [
+        "SM-S911B", "SM-S918B", "SM-S921B", "SM-S926B", "SM-S928B",
+        "Pixel 7a", "Pixel 8", "Pixel 8 Pro", "Xiaomi 14", "OnePlus 12"
+    ];
+
+    const buildVersions = [
+        "Build/TP1A.220624.014", "Build/TKQ1.220829.002",
+        "Build/UP1A.231005.007", "Build/UKQ1.231108.001", 
+        "Build/UQ1A.240105.004", "Build/AP3A.240905.015.A2", 
+        "Build/AQ3A.240912.001", "Build/BP22.250325.007"
+    ];
+
+    const chromeVersions = [
+        "121.0.6167.164", "122.0.6261.64", "122.0.6261.119",
+        "123.0.6312.40", "123.0.6312.80", "124.0.6367.60",
+        "124.0.6367.82", "125.0.6422.53", "125.0.6422.113",
+        "144.0.7559.200", "145.0.7632.130"
+    ];
+
+    // Removed all 4xx versions. strictly using 537+ to 550+ recent versions.
+    const fbVersions = [
+        "537.0.0.22.40", "538.0.0.33.65", "540.0.0.45.85", "541.0.0.44.75", 
+        "542.0.0.43.65", "544.0.0.41.45", "545.0.0.43.63", "546.0.0.42.66",
+        "547.0.0.39.50", "548.0.0.40.60", "549.0.0.41.70", "550.0.0.42.80"
+    ];
+
+    // Helper to shuffle arrays
+    function shuffleArray(array) {
+        let curId = array.length;
+        while (0 !== curId) {
+            let randId = Math.floor(Math.random() * curId);
+            curId -= 1;
+            let tmp = array[curId];
+            array[curId] = array[randId];
+            array[randId] = tmp;
+        }
+        return array;
+    }
+
+    function generate() {
+        let count = parseInt(document.getElementById('count').value);
+        const statusEl = document.getElementById('status');
+        const outputEl = document.getElementById('output');
+        
+        const totalAvailableModels = budgetMidModels.length + flagshipModels.length;
+        if (count > totalAvailableModels) {
+            alert(`Count adjusted to maximum unique models available: ${totalAvailableModels}`);
+            count = totalAvailableModels;
+            document.getElementById('count').value = count;
+        }
+
+        statusEl.innerText = "Generating Data...";
+        outputEl.style.opacity = "0.5";
+
+        setTimeout(() => {
+            // Shuffle model pools for strict uniqueness
+            let shuffledBudget = shuffleArray([...budgetMidModels]);
+            let shuffledFlagship = shuffleArray([...flagshipModels]);
+
+            // Calculate allowed flagships (Max 1 to 2 per 12 items naturally)
+            // If count is very large, keep flagship ratio to max 10%
+            let maxFlagships = Math.floor(count * 0.10); 
+            if (maxFlagships < 1) maxFlagships = 1; // at least 1 if count is small
+            if (maxFlagships > 2 && count <= 20) maxFlagships = 2; // cap at 2 for standard batches
+            
+            let actualFlagshipCount = Math.floor(Math.random() * maxFlagships) + 1;
+            
+            let selectedModelsForBatch = [];
+
+            // Pick Flagships
+            for (let i = 0; i < actualFlagshipCount; i++) {
+                if (shuffledFlagship.length > 0) {
+                    selectedModelsForBatch.push(shuffledFlagship.pop());
+                }
+            }
+
+            // Pick Budget/Mid range for the rest
+            while (selectedModelsForBatch.length < count) {
+                if (shuffledBudget.length > 0) {
+                    selectedModelsForBatch.push(shuffledBudget.pop());
+                } else if (shuffledFlagship.length > 0) {
+                    // Fallback to flagships if budget runs out (rare)
+                    selectedModelsForBatch.push(shuffledFlagship.pop());
+                } else {
+                    break; 
+                }
+            }
+
+            // Shuffle the final selected models so flagships don't always appear at the top
+            selectedModelsForBatch = shuffleArray(selectedModelsForBatch);
+
+            let uniqueUAs = new Set();
+            
+            // Generate final strings
+            for (let i = 0; i < selectedModelsForBatch.length; i++) {
+                const model = selectedModelsForBatch[i];
+                const os = osVersions[Math.floor(Math.random() * osVersions.length)];
+                const build = buildVersions[Math.floor(Math.random() * buildVersions.length)];
+                const chrome = chromeVersions[Math.floor(Math.random() * chromeVersions.length)];
+                const fb = fbVersions[Math.floor(Math.random() * fbVersions.length)];
+                
+                const uaString = `Mozilla/5.0 (Linux; Android ${os}; ${model} ${build}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/${chrome} Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/${fb};IABMV/1;]`;
+                
+                uniqueUAs.add(uaString);
+            }
+
+            outputEl.value = Array.from(uniqueUAs).join('\n');
+            outputEl.style.opacity = "1";
+            
+            const now = new Date();
+            document.getElementById('timestamp').innerText = `Generated at ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+            statusEl.innerText = "Completed";
+            
+            setTimeout(() => { statusEl.innerText = "Ready"; }, 2000);
+        }, 300);
+    }
+
+    function copy() {
+        const text = document.getElementById('output');
+        if (!text.value) return;
+        
+        text.select();
+        document.execCommand('copy');
+        
+        const copyBtn = document.querySelector('.btn-copy');
+        const originalText = copyBtn.innerText;
+        copyBtn.innerText = 'Copied!';
+        setTimeout(() => { copyBtn.innerText = originalText; }, 1500);
+    }
+
+    function downloadTxt() {
+        const text = document.getElementById('output').value;
+        if (!text) return;
+        
+        const blob = new Blob([text], { type: 'text/plain' });
+        const anchor = document.createElement('a');
+        anchor.download = 'fb_ua_anti_detect.txt';
+        anchor.href = window.URL.createObjectURL(blob);
+        anchor.target = '_blank';
+        anchor.style.display = 'none';
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+    }
+</script>
+
+</body>
+</html>
